@@ -59,6 +59,7 @@ Route::get('/order', [OrderController::class, 'index'])->name('order');
 Route::post('/order/details', [OrderController::class, 'orderDetails'])->name('orderDetails');
 Route::get('/order/checkout', [OrderController::class, 'payment'])->name('payment');
 Route::get('/order/invoice/{id}', [OrderController::class, 'invoice'])->name('invoice');
+Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 //     return view('welcome');
 // });
 
