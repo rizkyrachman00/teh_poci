@@ -26,12 +26,15 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title">Main</li>
+            <li class="side-nav-item">
+                <a href="{{ route('home') }}" class="side-nav-link">
+                    <span> HOME </span>
+                </a>
+            </li>
 
             <li class="side-nav-item">
                 <a href="{{ route('dashboard.index') }}" class="side-nav-link">
                     <i class="ri-dashboard-3-line"></i>
-                    <span class="badge bg-success float-end">9+</span>
                     <span> Dashboard </span>
                 </a>
             </li>
