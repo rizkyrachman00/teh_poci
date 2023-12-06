@@ -34,16 +34,25 @@
         </div>
 
         <div class="ctas">
-
             @auth
-            <div class="menu" style="margin-bottom:-30px">
+            {{-- <div class="" style="margin-bottom:-30px;"> --}}
                 <img src="{{ asset('picture/accounts/' . auth()->user()->gambar) }}" alt="" width="40px" style="border-radius: 50%;margin-right:-40px">
-                <a href="#" id="user-name">{{ auth()->user()->name }}</a>
-            </div>
-        @endauth
-        
+                <a href="#" id="user-name" class="menu-item">Hai, {{ auth()->user()->name }}</a>
+            {{-- </div> --}}
+            @endauth
+            
+            
             <a href="#"><img src="{{ asset('asset-img/shopping-cart.png') }}" alt=""></a>
-            <a href="{{ url('/login') }}"><img src="{{ asset('asset-img/grid.png') }}" alt=""></a>
+            @auth
+            {{-- <form action="{{route('auth.logout')}}" method="post">
+            <a href="{{ url('/logout') }}"><img src="{{ asset('asset-img/pintu-keluar.png') }}" alt=""></a>
+            @csrf
+            </form> --}}
+            <a href="#" id="logout-link"><img src="{{ asset('asset-img/pintu-keluar.png') }}" alt=""></a>
+
+            @else
+            <a href="{{ url('/login') }}"><img src="{{ asset('asset-img/pintuk-masuk.png') }}" alt=""></a>
+            @endauth
 
 
        
@@ -57,9 +66,10 @@
     <!-- Your popup content goes here -->
     <!-- For example, you can show user details or links -->
     <p>Hello, {{ auth()->user()->name }}!</p>
-  
-
-
+    {{-- <form action="{{route('auth.logout')}}" method="post">
+        @csrf
+    <button class="buy-now-button" type="submit">Logout</button>
+</form> --}}
     <!-- Add any other content you want to display -->
 </div>
 @endauth

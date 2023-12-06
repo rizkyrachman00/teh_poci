@@ -110,10 +110,16 @@ class AuthController extends Controller {
             return redirect(url('/login'))->with('danger', 'keys tidak valid pastikan sudah melakuakn registrasi')->withInput();
         }
     }
-    function logout() {
+    public function logout(Request $request) {
         Auth::logout();
-        return redirect(url('/login'))->with('success', 'Anda berhasil logout');
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('success', 'Anda berhasil logout');
     }
+
     public function register() {
         $title = 'Halaman Registrasi';
         return view('auth.register')->with('title', $title);
