@@ -4,13 +4,14 @@ body {
 }
 
 .container2 {
-    width: 90vw;
-    margin: 0 auto;
-    margin-top: 0px;
+    width: 100%;
+    margin: 0px auto;
+    margin-top: 2px;
     display: flex;
-    background-image: url('/asset-img/bghijau1.png');
-    background-position: center;
-    background-size: 138vw;
+    background-color: #0D9B4D;
+    /* background-image: url('/asset-img/bghijau1.png'); */
+    /* background-position: center; */
+    background-size: cover;
 }
 .slide2 {
     margin-right: 2px;
@@ -48,4 +49,25 @@ body {
     border-radius: 35px;
     width: 15vw;
     padding: 10px;
+}
+
+/* Media query untuk layar yang lebih kecil */
+@media (max-width: 768px) {
+    .headline p {
+        margin-left: 0; /* Reset margin kiri untuk layout responsif */
+    }
+
+    .image-with-text {
+        flex-direction: column; /* Susun vertikal untuk layar kecil */
+        align-items: center; /* Geser elemen ke kiri untuk layar kecil */
+    }
+
+    .image-with-text img {
+        max-width: 50%; /* Penuh lebar untuk layar kecil */
+        margin-bottom: 10px; /* Jarak bawah yang lebih kecil untuk responsif */
+    }
+
+    .content p {
+        margin-right: 0; /* Reset margin kanan untuk layout responsif */
+    }
 }

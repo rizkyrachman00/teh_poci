@@ -13,8 +13,31 @@
         {{-- sidebar end --}}
 
         <div class="content-page">
-
-          <h1>ini pemesanan</h1>
+          <h1>Halaman Pemesanan</h1>
+          <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Tanggal Pemesanan</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Metode Pembayaran</th>
+                    <th class="text-center">Jumlah Pembelian</th>
+                    <th class="text-center">Jumlah Pembayaran</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($orderDetails as $order)
+                    <tr>
+                        <td class="text-center">{{ $order->date }}</td>
+                        <td class="text-center">{{ $order->status }}</td>
+                        <td class="text-center">{{ $order->payment_method }}</td>
+                        <td class="text-center">{{ $order->total_quantity }}</td>
+                        <td class="text-center">Rp.
+                            {{ rtrim(rtrim(number_format($order->total_ammount, 2, ',', '.'), '0'), ',') }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
         </div>
     </div>
 

@@ -42,7 +42,7 @@ class OrderController extends Controller {
         foreach($products as $product) {
             $quantity = $request->input('quantity'.$product->id);
             $subTotal = $product->price * $quantity;
-            if($quantity) {
+            if(($quantity)) {
                 $orderDetails[] = [
                     'name' => $product->manajemenProduct->nama_produk,
                     'price' => $product->price,
@@ -64,8 +64,8 @@ class OrderController extends Controller {
                     "created_at" => now(),
                     "updated_at" => now(),
                 ]);
-            } else {
-                return redirect()->route('order')->with('error', 'Jumlah tidak boleh kosong');
+            } elseif($quantity == 0) {
+                //
             }
         }
 
@@ -113,6 +113,115 @@ class OrderController extends Controller {
         return view("layouts.orderDetails", [
             "title" => "Payment a Project",
             "totalAmmount" => $totalAmmount,
+            "snap_token" => $snapToken,
+            "orderDetails" => $orderDetails,
+            "orderId" => $orderId,
+        ]);
+    }
+
+    public function edit($orderId) {
+        $order = Order::find($orderId);
+        $prducts = ShowProduct::all();
+        $orderDetails = OrderDetail::where('order_id', $orderId)->get();
+        return view('layouts.orderEdit', [
+            "title" => "Edit Order",
+            "order" => $order,
+            "orderId" => $orderId,
+            "products" => $prducts,
+            "orderDetails" => $orderDetails,
+        ]);
+    }
+
+    public function updateOrder(Request $request, $orderId) {
+        $products = ShowProduct::all();
+        $user = User::find(auth()->user()->id);
+        $orderDetails = [];
+        $totalQuantity = 0;
+        $totalAmount = 0;
+
+        // Hapus Order::create() karena order sudah ada, cukup lakukan update
+        Order::find($orderId)->update([
+            "updated_at" => now(),
+        ]);
+
+        foreach($products as $product) {
+            $quantity = $request->input('quantity'.$product->id);
+            $subTotal = $product->price * $quantity;
+
+            if($quantity > 0) {
+                $orderDetails[] = [
+                    'name' => $product->manajemenProduct->nama_produk,
+                    'price' => $product->price,
+                    'id' => $product->id,
+                    'quantity' => $quantity,
+                    'subtotal' => $subTotal,
+                ];
+
+                $totalQuantity += $quantity;
+                $totalAmount += $subTotal;
+
+                // Perbarui OrderDetail jika sudah ada, tambahkan jika belum
+                OrderDetail::updateOrCreate(
+                    ['order_id' => $orderId, 'product_id' => $product->id],
+                    [
+                        "name" => $product->manajemenProduct->nama_produk,
+                        "price" => $product->price,
+                        "quantity" => $quantity,
+                        "subtotal" => $subTotal,
+                        "created_at" => now(),
+                        "updated_at" => now(),
+                    ]
+                );
+            } elseif($quantity == 0) {
+                OrderDetail::where('order_id', $orderId)->where('product_id', $product->id)->delete();
+            }
+        }
+
+        // Update Order dengan total baru
+        Order::find($orderId)->update([
+            "total_quantity" => $totalQuantity,
+            "total_ammount" => $totalAmount,
+            "updated_at" => now(),
+        ]);
+
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = 'SB-Mid-server--n_-sMtvxjLQEtjNrAmUaXE5';
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $orderId,
+                'gross_amount' => $totalAmount,
+            ),
+            'item_details' => $orderDetails,
+            'customer_details' => array(
+                'first_name' => $user->name,
+                'last_name' => '',
+                'email' => $user->email,
+                'phone' => $user->konsumen->phone,
+                'billing_address' => [
+                    'first_name' => $user->name,
+                    'last_name' => '',
+                    'email' => $user->email,
+                    'phone' => $user->konsumen->phone,
+                    'address' => $user->konsumen->address,
+                ],
+            ),
+        );
+
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        // dd($orderDetails, $totalAmmount, $orderId, $params, $totalQuantity, $snapToken);
+
+        return view("layouts.orderDetails", [
+            "title" => "Payment a Project",
+            "totalAmmount" => $totalAmount,
             "snap_token" => $snapToken,
             "orderDetails" => $orderDetails,
             "orderId" => $orderId,
@@ -190,10 +299,12 @@ class OrderController extends Controller {
                 ]);
 
                 $orderDetails = OrderDetail::where('order_id', $request->order_id)->get();
+
                 foreach($orderDetails as $orderDetail) {
-                    $product = ShowProduct::find($orderDetail->product_id); // Ganti Product dengan ShowProduct
-                    $manajemenProduct = manajemenProduct::find($orderDetail->product_id);
-                    if($product) {
+                    $product = ShowProduct::find($orderDetail->product_id);
+                    $manajemenProduct = manajemenProduct::find($orderDetail->product_id); // Pastikan nama modelnya benar
+
+                    if($product && $manajemenProduct) {
                         // Pastikan bahwa kuantitas yang dikurangkan tidak melebihi 0
                         $newQuantity = max(0, $product->quantity - $orderDetail->quantity);
 
@@ -207,9 +318,10 @@ class OrderController extends Controller {
                             'updated_at' => now(),
                         ]);
                     } else {
-                        throw new \Exception('Order not found');
+                        throw new \Exception('Product not found');
                     }
                 }
+
             }
         }
     }

@@ -3,13 +3,13 @@ body {
 }
 
 .container5 {
-    width: 90vw;
+    width: 100%;
     margin: 0 auto;
-    margin-top: 0px;
+    margin-top: 20px;
     display: flex;
     background-image: url('/asset-img/bgputih.png');
     background-position: center;
-    background-size: 130vw;
+    background-size: cover;
 }
 
 .slide5 {
@@ -38,8 +38,8 @@ body {
     color: #000000;   /* Warna teks ulasan */
     text-align: center;
     align-items: center;
-    margin-right: 15vw;
-    margin-left: 15vw;
+    margin-right: 25%;
+    margin-left: 25%;
     justify-content: center;
     margin-bottom: 0px;
 }

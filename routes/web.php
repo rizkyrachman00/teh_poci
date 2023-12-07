@@ -57,6 +57,8 @@ Route::get('/order', [OrderController::class, 'index'])->name('order');
 // Route::get('/order/details', [OrderController::class, 'orderDetails'])->name('orderDetails');
 
 Route::post('/order/details', [OrderController::class, 'orderDetails'])->name('orderDetails');
+Route::get('/order/{orderId}/edit', [OrderController::class, 'edit'])->name('order.edit');
+Route::post('/order/{orderId}/update', [OrderController::class, 'updateOrder'])->name('order.update');
 Route::get('/order/checkout', [OrderController::class, 'payment'])->name('payment');
 Route::get('/order/invoice/{id}', [OrderController::class, 'invoice'])->name('invoice');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
@@ -108,6 +110,7 @@ Route::group(['middleware' => 'role:admin'], function () {
     //halaman laporan
     Route::get('/laporan', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
     Route::post('/laporan/tampilkanLaporan', [App\Http\Controllers\LaporanController::class, 'tampilkanLaporan'])->name('laporan.tampilkanLaporan');
+    Route::get('/laporan/cetak-pdf', [App\Http\Controllers\LaporanController::class, 'cetakPDF'])->name('laporan.cetakPDF');
 
     //halaman promo
     Route::get('/promo', [App\Http\Controllers\PromoController::class, 'index'])->name('promo.index');

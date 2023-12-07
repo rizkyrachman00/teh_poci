@@ -20,6 +20,7 @@
     @include('partials.navbar')
     <div class="container ">
         <h1>Detail Pesanan</h1>
+        <a href="{{ route('order.edit', ['orderId' => $orderId]) }}" class="btn btn-warning mb-2">Edit Pesanan</a>
         <div class="table-responsive">
         <table class="table table-bordered table-hover allign-middle">
           <thead>
@@ -46,7 +47,7 @@
                 <h5>
                     Total Pembayaran Rp. {{rtrim(rtrim(number_format($totalAmmount, 2, ',', '.'), '0'), ',')}}
                 </h5>
-                <button type="submit" id="pay-button" class="btn btn-primary">Bayar</button>
+                <button type="submit" id="pay-button" class="btn btn-success">Bayar</button>
                 <script type="text/javascript">
                     // For example trigger on button clicked, or any time you need
                     var payButton = document.getElementById('pay-button');
@@ -72,7 +73,26 @@
                         }
                       })
                     });
+
+                    document.getElementById('logout-link').addEventListener('click', function() {
+                    // Buat elemen formulir baru
+                    var form = document.createElement('form');
+                    form.action = "{{ route('auth.logout') }}";
+                    form.method = 'POST';
+                    document.body.appendChild(form);
+
+                    // Tambahkan token CSRF ke formulir
+                    var csrfToken = document.createElement('input');
+                    csrfToken.type = 'hidden';
+                    csrfToken.name = '_token';
+                    csrfToken.value = "{{ csrf_token() }}";
+                    form.appendChild(csrfToken);
+
+                    // Kirim formulir
+                    form.submit();
+                });
                   </script>
+                  {{-- <script src="{{asset('js/script.js')}}"></script> --}}
   </div>
 </body>
 </html>

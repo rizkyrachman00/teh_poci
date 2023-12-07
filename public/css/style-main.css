@@ -117,3 +117,51 @@ nav .ctas img {
     margin: 0;
 }
 /* end home */
+/* Media query untuk layar yang lebih kecil */
+@media (max-width: 768px) {
+    nav .logo {
+        width: 25%;
+    }
+    nav .menu {
+        width: 50%;
+    }
+    nav .ctas {
+        width: 25%;
+    }
+    
+    nav .menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .logo-item .title-1,
+    .logo-item .title-2 {
+        font-size: 14px; /* Kurangi ukuran font pada layar kecil */
+    }
+}
+
+@media (max-width: 268px) {
+    nav .logo {
+        width: 15%;
+    }
+    nav .menu {
+        width: 20%;
+    }
+    nav .ctas {
+        width: 15%;
+    }
+    
+    nav .menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .logo-item .title-1,
+    .logo-item .title-2 {
+        font-size: 14px; /* Kurangi ukuran font pada layar kecil */
+    }
+}

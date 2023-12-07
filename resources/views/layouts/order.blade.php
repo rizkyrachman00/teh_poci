@@ -46,10 +46,28 @@
                     </div>
                 @endforeach
             </div>
-            <button type="submit" class="btn btn-success">Pesan</button>
+            <button type="submit" class="btn btn-success mt-2">Pesan</button>
         </form>
     </div>
-    <script src="{{asset('js/script.js')}}"></script>
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function() {
+            // Buat elemen formulir baru
+            var form = document.createElement('form');
+            form.action = "{{ route('auth.logout') }}";
+            form.method = 'POST';
+            document.body.appendChild(form);
+
+            // Tambahkan token CSRF ke formulir
+            var csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = "{{ csrf_token() }}";
+            form.appendChild(csrfToken);
+
+            // Kirim formulir
+            form.submit();
+        });
+    </script>
 </body>
 
 
