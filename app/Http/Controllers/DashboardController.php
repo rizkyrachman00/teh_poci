@@ -8,10 +8,8 @@ use App\Models\User;
 use App\Models\manajemenProduct;
 
 
-class DashboardController extends Controller
-{
-    public function index()
-    {
+class DashboardController extends Controller {
+    public function index() {
         $totalRevenue = Order::sum('total_ammount');
         $orders = Order::all();
         $orderCount = Order::count();
