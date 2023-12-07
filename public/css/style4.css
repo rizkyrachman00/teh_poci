@@ -1,19 +1,25 @@
+/* Gaya umum */
 body {
     font-family: "poppins", sans-serif;
 }
+
 .container4 {
-    width: 90vw;
+    width: 100%;
     margin: 0 auto;
     margin-top: 20px;
     display: flex;
-    background-image: url('/asset-img/bghijau1.png');
+    background-color: #0D9B4D;
     background-position: center;
-    background-size: 120vw;
+    background-size: cover;
+    flex-wrap: wrap; /* Baris baru untuk layout responsif */
+    padding: 20px;;
 }
+
 .slide4 {
     margin-right: 2px;
     align-content: center;
 }
+
 .headline p {
     color: #ffffff;
     margin-left: 13vw;
@@ -22,21 +28,50 @@ body {
     font-weight: bold;
     font-size: 25px;
 }
+
 .image-with-text {
     display: flex;
     align-items: center;
-  }
+    width: 100%; /* Penuh lebar agar responsif */
+    box-sizing: border-box;
+}
+
 .image-with-text img {
-    max-width: 400px; /* Sesuaikan ukuran gambar yang diinginkan */
+    max-width: 25%; /* Sesuaikan ukuran gambar yang diinginkan */
     margin-left: 0px; /* Jarak antara gambar dan teks */
     order: 1; /* Mengubah urutan elemen: gambar ke kiri */
+    margin-bottom: 20px; /* Jarak bawah untuk responsif */
 }
+
 .image-with-text .content {
     order: 2;
+    margin-right: 0; /* Reset margin kanan untuk layout responsif */
 }
+
 .content p {    
     color: #ffffff;
     margin-right: 15vw;
     margin-bottom: 15px;
     line-height: 1.5;
+}
+
+/* Media query untuk layar yang lebih kecil */
+@media (max-width: 768px) {
+    .headline p {
+        margin-left: 0; /* Reset margin kiri untuk layout responsif */
+    }
+
+    .image-with-text {
+        flex-direction: column; /* Susun vertikal untuk layar kecil */
+        align-items: center; /* Geser elemen ke kiri untuk layar kecil */
+    }
+
+    .image-with-text img {
+        max-width: 50%; /* Penuh lebar untuk layar kecil */
+        margin-bottom: 10px; /* Jarak bawah yang lebih kecil untuk responsif */
+    }
+
+    .content p {
+        margin-right: 0; /* Reset margin kanan untuk layout responsif */
+    }
 }

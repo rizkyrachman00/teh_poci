@@ -42,7 +42,7 @@ class OrderController extends Controller {
         foreach($products as $product) {
             $quantity = $request->input('quantity'.$product->id);
             $subTotal = $product->price * $quantity;
-            if($quantity) {
+            if($quantity > 0) {
                 $orderDetails[] = [
                     'name' => $product->manajemenProduct->nama_produk,
                     'price' => $product->price,
@@ -64,8 +64,8 @@ class OrderController extends Controller {
                     "created_at" => now(),
                     "updated_at" => now(),
                 ]);
-            } else {
-                return redirect()->route('order')->with('error', 'Jumlah tidak boleh kosong');
+            } elseif(count($orderDetails) === 0) {
+                return redirect()->route('order')->with('error', 'Jumlah pemesanan tidak boleh kosong');
             }
         }
 
@@ -190,10 +190,12 @@ class OrderController extends Controller {
                 ]);
 
                 $orderDetails = OrderDetail::where('order_id', $request->order_id)->get();
+
                 foreach($orderDetails as $orderDetail) {
-                    $product = ShowProduct::find($orderDetail->product_id); // Ganti Product dengan ShowProduct
-                    $manajemenProduct = manajemenProduct::find($orderDetail->product_id);
-                    if($product) {
+                    $product = ShowProduct::find($orderDetail->product_id);
+                    $manajemenProduct = manajemenProduct::find($orderDetail->product_id); // Pastikan nama modelnya benar
+
+                    if($product && $manajemenProduct) {
                         // Pastikan bahwa kuantitas yang dikurangkan tidak melebihi 0
                         $newQuantity = max(0, $product->quantity - $orderDetail->quantity);
 
@@ -207,9 +209,10 @@ class OrderController extends Controller {
                             'updated_at' => now(),
                         ]);
                     } else {
-                        throw new \Exception('Order not found');
+                        throw new \Exception('Product not found');
                     }
                 }
+
             }
         }
     }

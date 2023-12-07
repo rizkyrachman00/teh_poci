@@ -29,7 +29,6 @@
             <link rel="stylesheet" href="{{ asset('css/style2.css') }}">
             <div class="image-with-text">
                 <img src="{{ asset('asset-img/tehpoci.png') }}" alt="Deskripsi Gambar">
-
                 <ul class="list">
                     <p> DARI BAHAN - BAHAN KUALITAS PILIHAN </p>
                     <li>Tastes like dessert without added sugars or sugar alcohols</li>
@@ -59,14 +58,14 @@
     @foreach ($product as $item)
         <div class="product">
             <img src="/katalog/{{ $item->image }}" alt="Gambar Produk">
-            <h1 class="card-title">
+            <h3 class="card-title">
                 @if ($item->manajemenProduct)
                     {{ $item->manajemenProduct->nama_produk }}
                 @else
                     Product Not Found
                 @endif
-            </h1>
-            <h3 class="card-text">{{ $item->description }}</h3>
+            </h3>
+            <h4 class="card-text">{{ $item->description }}</h4>
             <p class="card-text">{{ $item->price }}</p>
             <p class="card-text"></p>
             <a href="{{ route('order') }}" class="buy-now-button">Buy Now</a>
@@ -75,64 +74,6 @@
 @else
     <p style="color: red">Silahkan Login dulu untuk belanja!!!!.</p>
 @endif
-
-
-
-                {{-- @foreach ($products as $product)
-                <div class="product">
-                  <img src="{{ asset('asset-img/'.$product->image) }}" alt="Gambar Produk 1">
-
-                            <h5 class="card-title">{{ $product->name }}</h5>
-                            <h4 class="card-text">Rp. {{ $product->price }},00</h4>
-                            <h5 class="card-text">{{ $product->description }}</h5>
-                            <a href="{{ route('order') }}" class="buy-now-button">Buy Now</a>
-                  </div>
-                @endforeach --}}
-
-                {{-- <div class="product">
-                    <img src="{{ asset('asset-img/melati.png') }}" alt="Gambar Produk 1">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/vanilla.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/thai.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/lemon.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/guava.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/blackcurrant.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/leci.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/mango.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/apel.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/capucino.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a>
-                </div>
-                <div class="product">
-                    <img src="{{ asset('asset-img/cokelat.png') }}" alt="Gambar Produk 2">
-                    <a href="#" class="buy-now-button">Buy Now</a> --}}
-                {{-- </div> --}}
             </div>
         </div>
         <!-- slide 4 -->
@@ -207,3 +148,4 @@
             </footer>
         </div>
     </div>
+</div>

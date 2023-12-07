@@ -2,12 +2,12 @@ body {
     font-family: "poppins", sans-serif;
 }
 .container {
-    width: 100vw;
+    width: 100%;
     margin: 0 auto;
-    background-color: rgb(199, 199, 193);
+    background-color: rgb(251, 251, 251);
 }
 .container1 {
-    width: 90vw;
+    width: 100%;
     margin: 0 auto;
     background-image: url('/asset-img/bgputih.png');
     background-position: center;
@@ -40,4 +40,24 @@ body {
     height: auto;
     display: flex;
     margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .headline p {
+        margin-left: 0; /* Reset margin kiri untuk layout responsif */
+    }
+
+    .featured-image {
+        flex-direction: row; /* Susun vertikal untuk layar kecil */
+        align-items: center; /* Geser elemen ke kiri untuk layar kecil */
+    }
+
+    .featured-image img {
+        max-width: 50%; /* Penuh lebar untuk layar kecil */
+        margin-bottom: 10px; /* Jarak bawah yang lebih kecil untuk responsif */
+    }
+
+    .content p {
+        margin-right: 0; /* Reset margin kanan untuk layout responsif */
+    }
 }

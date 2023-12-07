@@ -3,7 +3,7 @@ body {
 }
 
 .container6 {
-    width: 90vw;
+    width: 100%;
     margin: 0 auto;
     margin-top: 0px;
     display: flex;
@@ -17,6 +17,7 @@ body {
 }
 
 .footer {
+    width: 100%;
     background-color: #000000;    /* Warna latar belakang footer */
     padding: 20px 0;   /* Ruang di dalam footer */
 }
@@ -24,6 +25,7 @@ body {
 .footer-content {
     width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     color: #ffffff;
@@ -35,6 +37,7 @@ body {
 }
 
 .contact-info {
+    width: 100%;
     text-align: right;
 }
 
@@ -77,6 +80,7 @@ body {
 }
 
 .description{
+    width: 100%;
     margin-top: 20px;
 }
 
