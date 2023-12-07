@@ -159,7 +159,7 @@
                             <tfoot>
                                 <tr class="total-row">
                                     <td colspan="6">Total</td>
-                                    <td>Rp 500,000</td>
+                                    <td>Rp {{rtrim(rtrim(number_format($orderSumAmmount, 2, ',', '.'), '0'), ',')}}</td>
                                 </tr>
                             </tfoot>
                         </table>

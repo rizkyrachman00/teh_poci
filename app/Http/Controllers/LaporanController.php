@@ -10,8 +10,8 @@ class LaporanController extends Controller {
 
         // Memanggil fungsi tampilkanLaporan dengan menyertakan argumen
         $orders = Order::all();
-
-        return view('Admin.partials.layouts.laporan', compact('orders'));
+        $orderSumAmmount = Order::sum('total_ammount');
+        return view('Admin.partials.layouts.laporan', compact('orders', 'orderSumAmmount'));
     }
 
     public function tampilkanLaporan(Request $request) {
