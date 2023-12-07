@@ -13,31 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Order</title>
-    {{-- <style>
-       .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.card {
-    width: 30%; /* Sesuaikan lebar kartu sesuai kebutuhan */
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
-
-
-
-        .card img {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .order-input {
-            width: 100%;
-            margin-top: 10px;
-        }
-    </style> --}}
 </head>
 
 <body>
@@ -46,23 +21,27 @@
         <form action="{{ route('orderDetails') }}" method="post">
             @csrf
             <h2> Pemesanan </h2>
-            <div class="row">
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <div class="row row-cols-3 row-cols-md-6 g-3">
                 @foreach ($products as $product)
-                    <div class="col-md-2 m-2">
-                        <div class="card" style="max-width: 300px; height: 400px;">
-                            <img src="/katalog/{{ $product->image }}" class="card-img-top mr-2" alt="..." style="max-width: 180px;">
+                    <div class="col">
+                        <div class="card md-2" style="min-height: 400px;">
                             <div class="card-body">
+                                <img src="/katalog/{{ $product->image }}" class="card-img-top me-2 md-2" alt="Product Image" style="max-width: 200px;">
                                 <h5 class="card-title">{{ $product->manajemenProduct->nama_produk }}</h5>
                                 <p class="card-text">Rp. {{ $product->price }} ,00</p>
                                 <p class="card-text">{{ $product->description }}</p>
-                                {{-- <input type="text" name="quantity{{ $product->id }}" id="quantity{{ $product->id }}" class="form-control">
-                                 --}}
-                                 <div class="input-group">
-                                        <button type="button" class="btn btn-success" onclick="tambahQuantity('{{ $product->id }}')">+</button>
-                                        <input type="text" name="quantity{{ $product->id }}" id="quantity{{ $product->id }}" class="form-control text-center">
-                                        <button type="button" class="btn btn-warning" onclick="kurangQuantity('{{ $product->id }}')">-</button>
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-success" onclick="tambahQuantity('{{ $product->id }}')">+</button>
+                                    <input type="text" name="quantity{{ $product->id }}" id="quantity{{ $product->id }}" class="form-control text-center">
+                                    <button type="button" class="btn btn-warning" onclick="kurangQuantity('{{ $product->id }}')">-</button>
                                 </div>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
