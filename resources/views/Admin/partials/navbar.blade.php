@@ -352,7 +352,7 @@
                                 class="rounded-circle">
                         </span>
                         <span class="d-lg-block d-none">
-                            <h5 class="my-0 fw-normal">Jagad <i
+                            <h5 class="my-0 fw-normal">{{ auth()->user()->name }} <i
                                     class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i></h5>
                         </span>
                     </a>
@@ -375,7 +375,7 @@
                         </a>
 
                         <!-- item-->
-                        <a href="auth-logout-2.html" class="dropdown-item">
+                        <a id="logout-link" href="#" class="dropdown-item">
                             <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
                             <span>Keluar</span>
                         </a>

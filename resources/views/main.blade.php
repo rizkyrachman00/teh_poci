@@ -27,36 +27,35 @@
 
     <script>
         document.getElementById('user-name').addEventListener('click', function() {
-    var popup = document.getElementById('popup');
-    popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
-});
+            var popup = document.getElementById('popup');
+            popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+        });
 
-// Close the popup if the user clicks outside of it
-document.addEventListener('mouseup', function(event) {
-    var popup = document.getElementById('popup');
-    if (event.target !== popup && !popup.contains(event.target)) {
-        popup.style.display = 'none';
-    }
-});
+        // Close the popup if the user clicks outside of it
+        document.addEventListener('mouseup', function(event) {
+            var popup = document.getElementById('popup');
+            if (event.target !== popup && !popup.contains(event.target)) {
+                popup.style.display = 'none';
+            }
+        });
 
-    document.getElementById('logout-link').addEventListener('click', function() {
-        // Buat elemen formulir baru
-        var form = document.createElement('form');
-        form.action = "{{ route('auth.logout') }}";
-        form.method = 'POST';
-        document.body.appendChild(form);
+        document.getElementById('logout-link').addEventListener('click', function() {
+            // Buat elemen formulir baru
+            var form = document.createElement('form');
+            form.action = "{{ route('auth.logout') }}";
+            form.method = 'POST';
+            document.body.appendChild(form);
 
-        // Tambahkan token CSRF ke formulir
-        var csrfToken = document.createElement('input');
-        csrfToken.type = 'hidden';
-        csrfToken.name = '_token';
-        csrfToken.value = "{{ csrf_token() }}";
-        form.appendChild(csrfToken);
+            // Tambahkan token CSRF ke formulir
+            var csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = "{{ csrf_token() }}";
+            form.appendChild(csrfToken);
 
-        // Kirim formulir
-        form.submit();
-    });
-
+            // Kirim formulir
+            form.submit();
+        });
     </script>
 
 </body>

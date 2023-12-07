@@ -11,13 +11,17 @@ use App\Models\OrderDetail;
 use App\Models\manajemenProduct;
 use App\Models\ShowProduct;
 
-class OrderController extends Controller {
-    public function index() {
+class OrderController extends Controller
+{
+    public function index()
+    {
         $products = ShowProduct::all();
         return view("layouts.order", compact("products"));
     }
 
-    public function orderDetails(Request $request) {
+
+    public function orderDetails(Request $request)
+    {
 
         $products = ShowProduct::all();
         $user = User::find(auth()->user()->id);
@@ -38,10 +42,10 @@ class OrderController extends Controller {
             "updated_at" => now(),
         ]);
 
-        foreach($products as $product) {
-            $quantity = $request->input('quantity'.$product->id);
+        foreach ($products as $product) {
+            $quantity = $request->input('quantity' . $product->id);
             $subTotal = $product->price * $quantity;
-            if($quantity) {
+            if ($quantity) {
                 $orderDetails[] = [
                     'name' => $product->manajemenProduct->nama_produk,
                     'price' => $product->price,
@@ -116,7 +120,8 @@ class OrderController extends Controller {
         ]);
     }
 
-    public function payment(Request $request) {
+    public function payment(Request $request)
+    {
 
         $totalAmmount = $request->totalAmmount;
         $orderDetails = $request->orderDetails;
@@ -124,7 +129,7 @@ class OrderController extends Controller {
         $user = User::find($id);
         $itemDetails = [];
 
-        foreach($orderDetails as $orderDetail) {
+        foreach ($orderDetails as $orderDetail) {
             $itemDetails[] = [
                 'id' => $orderDetail['id'],
                 'name' => $orderDetail['name'],
@@ -174,11 +179,12 @@ class OrderController extends Controller {
         ]);
     }
 
-    public function callback(Request $request) {
+    public function callback(Request $request)
+    {
         $serverKey = config('midtrans.server_key');
-        $hashed = hash('sha512', $request->order_id.$request->status_code.$request->gross_amount.$serverKey);
-        if($hashed == $request->signature_key) {
-            if($request->transaction_status == 'settlement' || $request->transaction_status == 'capture' || $request->transaction_status == 'success') {
+        $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+        if ($hashed == $request->signature_key) {
+            if ($request->transaction_status == 'settlement' || $request->transaction_status == 'capture' || $request->transaction_status == 'success') {
                 $order = Order::find($request->order_id);
                 $order->update([
                     'status' => 'Paid',
@@ -187,10 +193,10 @@ class OrderController extends Controller {
                 ]);
 
                 $orderDetails = OrderDetail::where('order_id', $request->order_id)->get();
-                foreach($orderDetails as $orderDetail) {
+                foreach ($orderDetails as $orderDetail) {
                     $product = ShowProduct::find($orderDetail->product_id); // Ganti Product dengan ShowProduct
                     $manajemenProduct = manajemenProduct::find($orderDetail->product_id);
-                    if($product) {
+                    if ($product) {
                         // Pastikan bahwa kuantitas yang dikurangkan tidak melebihi 0
                         $newQuantity = max(0, $product->quantity - $orderDetail->quantity);
 
@@ -211,7 +217,8 @@ class OrderController extends Controller {
         }
     }
 
-    public function invoice($id) {
+    public function invoice($id)
+    {
         $order = Order::find($id);
         $orderDetails = OrderDetail::where('order_id', $id)->get();
         return view('layouts.invoice', [
