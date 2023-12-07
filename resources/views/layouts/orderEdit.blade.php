@@ -18,7 +18,7 @@
 <body>
     @include('partials.navbar')
     <div class="container">
-        <form action="{{ route('orderDetails') }}" method="post">
+        <form action="{{ route('order.update', ['orderId' => $orderId]) }}" method="post">
             @csrf
             <h2> Pemesanan </h2>
             @if(session('error'))
@@ -38,7 +38,7 @@
                                 <p class="card-text">{{ $product->description }}</p>
                                 <div class="input-group">
                                     <button type="button" class="btn btn-success" onclick="tambahQuantity('{{ $product->id }}')">+</button>
-                                    <input type="text" name="quantity{{ $product->id }}" id="quantity{{ $product->id }}" class="form-control text-center">
+                                    <input type="text" name="quantity{{ $product->id }}" id="quantity{{ $product->id }}" class="form-control text-center" >
                                     <button type="button" class="btn btn-warning" onclick="kurangQuantity('{{ $product->id }}')">-</button>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                     </div>
                 @endforeach
             </div>
-            <button type="submit" class="btn btn-success mt-2">Pesan</button>
+            <button type="submit" class="btn btn-success">Pesan</button>
         </form>
     </div>
     <script src="{{asset('js/script.js')}}"></script>
