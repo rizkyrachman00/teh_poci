@@ -17,6 +17,7 @@ class OrderController extends Controller {
         return view("layouts.order", compact("products"));
     }
 
+
     public function orderDetails(Request $request) {
 
         $products = ShowProduct::all();
@@ -63,6 +64,8 @@ class OrderController extends Controller {
                     "created_at" => now(),
                     "updated_at" => now(),
                 ]);
+            } else {
+                return redirect()->route('order')->with('error', 'Jumlah tidak boleh kosong');
             }
         }
 

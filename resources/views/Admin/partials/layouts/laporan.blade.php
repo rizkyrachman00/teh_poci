@@ -111,14 +111,15 @@
                     </header>
 
                     <section>
-                        <form>
+                        <form action="{{route('laporan.tampilkanLaporan')}}" method="POST">
+                            @csrf
                             <label for="txtTglAwal">Tanggal Awal:</label>
-                            <input type="text" id="txtTglAwal" placeholder="01-01-2023">
+                            <input type="date" id="txtTglAwal" placeholder="01-01-2023">
 
                             <label for="txtTglAkhir">Tanggal Akhir:</label>
-                            <input type="text" id="txtTglAkhir" placeholder="<?php echo date('d-m-Y'); ?>">
+                            <input type="date" id="txtTglAkhir" placeholder="<?php echo date('d-m-Y'); ?>">
 
-                            <button type="button" onclick="tampilkanLaporan()">Tampilkan</button>
+                            <button type="submit"">Tampilkan</button>
                         </form>
 
                         <table>
@@ -134,23 +135,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Data transaksi akan ditampilkan di sini -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>123456</td>
-                                    <td>01-01-2023</td>
-                                    <td>John Doe</td>
-                                    <td>Cash</td>
-                                    <td>Paid</td>
-                                    <td>Rp 500,000</td>
-                                </tr>
-                                <!-- Data transaksi lainnya -->
+                                @php
+                                $no = 1;
+                            @endphp
+                            @foreach($orders as $order)
+                            <tr>
+                                <td>{{$no++}}</td>
+                                <td>{{$order->id}}</td>
+                                <td>
+                                    @php
+                                        $tanggal = date('j F Y', strtotime($order->date));
+                                    @endphp
+                                    {{$tanggal}}
+                                </td>
+                                <td>{{$order->user->name}}</td>
+                                <td>{{$order->payment_method}}</td>
+                                <td>{{$order->status}}</td>
+                                <td>Rp. {{rtrim(rtrim(number_format($order->total_ammount, 2, ',', '.'), '0'), ',')}}</td>
+                            </tr>
+                            @endforeach
+                            <!-- Data transaksi lainnya -->
                             </tbody>
                             <tfoot>
                                 <tr class="total-row">
-                                    <td colspan="3">Total</td>
-                                    <td>Rp 500,000</td>
-                                    <td>Rp 0</td>
+                                    <td colspan="6">Total</td>
+                                    <td>Rp {{rtrim(rtrim(number_format($orderSumAmmount, 2, ',', '.'), '0'), ',')}}</td>
                                 </tr>
                             </tfoot>
                         </table>

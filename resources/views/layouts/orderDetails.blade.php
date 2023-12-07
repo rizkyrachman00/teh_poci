@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style-main.css') }}">
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script type="text/javascript"
       src="https://app.sandbox.midtrans.com/snap/snap.js"
       data-client-key="SB-Mid-client-IaiXkywEVH1Ck1kk"></script>
@@ -18,61 +18,61 @@
 </head>
 <body>
     @include('partials.navbar')
-    <div class="container">
-        <h1>Order Details</h1>
-                {{-- <form method="POST">
-                @csrf --}}
-                @foreach($orderDetails as $orderDetail)
-                <div class="card -m3">
-                    <div class="card-body">
-                        <p>{{$orderDetail['name']}}</p>
-                        <p>{{$orderDetail['price']}}
-                        <span>
-                           Quantity {{$orderDetail['quantity']}}
-                        </span>
-                        </p>
-                        <p>
-                            Total Price {{$orderDetail['subtotal']}}
-                        </p>
-                        {{-- <input type="hidden" name="orderDetails[{{ $orderDetail['product_id'] }}][id]" value="{{ $orderDetail['product_id'] }}">
-                        <input type="hidden" name="orderDetails[{{ $orderDetail['product_id'] }}][name]" value="{{ $orderDetail['name'] }}">
-                        <input type="hidden" name="orderDetails[{{ $orderDetail['product_id'] }}][price]" value="{{ $orderDetail['price'] }}">
-                        <input type="hidden" name="orderDetails[{{ $orderDetail['product_id'] }}][quantity]" value="{{ $orderDetail['quantity'] }}">
-                        <input type="hidden" name="orderDetails[{{ $orderDetail['product_id'] }}][subtotal]" value="{{ $orderDetail['subtotal'] }}"> --}}
-                    </div>
-                </div>
-                @endforeach
+    <div class="container ">
+        <h1>Detail Pesanan</h1>
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover allign-middle">
+          <thead>
+          <tr>
+            <th scope="col">Nama Produk</th>
+            <th scope="col">Harga</th>
+            <th scope="col">Jumlah</th>
+            <th scope="col">Subtotal</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @foreach($orderDetails as $orderDetail)
+          <tr>
+            <td>{{$orderDetail['name']}}</td>
+            <td>Rp. {{rtrim(rtrim(number_format($orderDetail['price'], 2, ',', '.'), '0'), ',')}}</td>
+            <td>{{$orderDetail['quantity']}}</td>
+            <td>Rp. {{rtrim(rtrim(number_format($orderDetail['subtotal'], 2, ',', '.'), '0'), ',')}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+        </table>
+        </div>
                 <h5>
-                    Total Pembayaran {{$totalAmmount}}
+                    Total Pembayaran Rp. {{rtrim(rtrim(number_format($totalAmmount, 2, ',', '.'), '0'), ',')}}
                 </h5>
-                {{-- <input type="hidden" name="totalAmmount" value="{{ $totalAmmount }}"> --}}
-                <button type="submit" id="pay-button" class="btn btn-primary">Pay</button>
-            <script type="text/javascript">
-                // For example trigger on button clicked, or any time you need
-                var payButton = document.getElementById('pay-button');
-                payButton.addEventListener('click', function () {
-                  // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
-                  window.snap.pay('{{ $snap_token }}', {
-                    onSuccess: function(result){
-                      /* You may add your own implementation here */
-                      window.location = '/order/invoice/{{ $orderId }}';
-                      alert("payment success!"); console.log(result);
-                    },
-                    onPending: function(result){
-                      /* You may add your own implementation here */
-                      alert("wating your payment!"); console.log(result);
-                    },
-                    onError: function(result){
-                      /* You may add your own implementation here */
-                      alert("payment failed!"); console.log(result);
-                    },
-                    onClose: function(){
-                      /* You may add your own implementation here */
-                      alert('you closed the popup without finishing the payment');
-                    }
-                  })
-                });
-              </script>
-    </div>
+                <button type="submit" id="pay-button" class="btn btn-primary">Bayar</button>
+                <script type="text/javascript">
+                    // For example trigger on button clicked, or any time you need
+                    var payButton = document.getElementById('pay-button');
+                    payButton.addEventListener('click', function () {
+                      // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+                      window.snap.pay('{{ $snap_token }}', {
+                        onSuccess: function(result){
+                          /* You may add your own implementation here */
+                          window.location = '/order/invoice/{{ $orderId }}';
+                          alert("payment success!"); console.log(result);
+                        },
+                        onPending: function(result){
+                          /* You may add your own implementation here */
+                          alert("wating your payment!"); console.log(result);
+                        },
+                        onError: function(result){
+                          /* You may add your own implementation here */
+                          alert("payment failed!"); console.log(result);
+                        },
+                        onClose: function(){
+                          /* You may add your own implementation here */
+                          alert('you closed the popup without finishing the payment');
+                        }
+                      })
+                    });
+                  </script>
+  </div>
 </body>
 </html>

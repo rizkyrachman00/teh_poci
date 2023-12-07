@@ -107,6 +107,7 @@ Route::group(['middleware' => 'role:admin'], function () {
 
     //halaman laporan
     Route::get('/laporan', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
+    Route::post('/laporan/tampilkanLaporan', [App\Http\Controllers\LaporanController::class, 'tampilkanLaporan'])->name('laporan.tampilkanLaporan');
 
     //halaman promo
     Route::get('/promo', [App\Http\Controllers\PromoController::class, 'index'])->name('promo.index');
@@ -129,6 +130,7 @@ Route::group(['middleware' => 'role:admin'], function () {
     Route::get('/get_product_info/{id}', [App\Http\Controllers\ManajemenController::class, 'getProductInfo']);
 
     Route::get('/delete_product/{id}', [App\Http\Controllers\KatalogController::class, 'delete_product']);
+
 });
 
 // //fungsi add produk
@@ -136,5 +138,3 @@ Route::group(['middleware' => 'role:admin'], function () {
 
 // //halaman add produk
 // Route::get('/viewProduk', [App\Http\Controllers\ManajemenController::class, 'viewProduct']);
-
-
