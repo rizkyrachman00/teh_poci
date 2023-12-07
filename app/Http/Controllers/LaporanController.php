@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use PDF;
 
 class LaporanController extends Controller {
     public function index(Request $request) {
@@ -29,5 +30,24 @@ class LaporanController extends Controller {
 
     }
 
+    public function cetakPDF(Request $request) {
+        // Dapatkan data pesanan sesuai kebutuhan Anda
+        // $tglAwal = $request->input('tglAwal');
+        // $tglAkhir = $request->input('tglAkhir');
 
+        // if(!$tglAwal || !$tglAkhir) {
+        //     $orders = Order::all();
+        // } else {
+        //     $orders = Order::whereBetween('date', [$tglAwal, $tglAkhir])->get();
+        // }
+
+        $orders = Order::all();
+        $orderSumAmmount = Order::sum('total_ammount');
+
+        // Cetak PDF
+        $pdf = PDF::loadView('Admin.partials.layouts.laporan-pdf', ['orders' => $orders, 'orderSumAmmount' => $orderSumAmmount])->setOptions(['defaultFont' => 'sans-serif']);
+
+        // Tampilkan atau unduh PDF
+        return $pdf->download('laporan.pdf');
+    }
 }

@@ -48,5 +48,22 @@
             <a href="{{route('home')}}" class="btn btn-success">Home</a>
             </div>
     </div>
+    <script>document.getElementById('logout-link').addEventListener('click', function() {
+        // Buat elemen formulir baru
+        var form = document.createElement('form');
+        form.action = "{{ route('auth.logout') }}";
+        form.method = 'POST';
+        document.body.appendChild(form);
+
+        // Tambahkan token CSRF ke formulir
+        var csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = "{{ csrf_token() }}";
+        form.appendChild(csrfToken);
+
+        // Kirim formulir
+        form.submit();
+    });</script>
 </body>
 </html>

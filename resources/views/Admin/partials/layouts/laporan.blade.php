@@ -166,7 +166,7 @@
 
                         <div class="row">
                             <div class="col-lg-3">
-                                <button onclick="cetakLaporan()" class="print-btn">Cetak Laporan</button>
+                                <a href="{{route('laporan.cetakPDF')}}" onclick="cetakLaporan()" class="print-btn">Cetak Laporan</a>
                             </div>
                         </div>
                     </section>

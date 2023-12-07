@@ -87,7 +87,7 @@
                 <a href="{{ route('pelanggan.index') }}" class="side-nav-link">
                     <i class="ri-contacts-book-2-line"></i>
                     <span class="badge bg-success float-end"></span>
-                    <span> Pelanggan </span>
+                    <span> Pengguna </span>
                 </a>
             </li>
 
