@@ -107,6 +107,7 @@ Route::group(['middleware' => 'role:admin'], function () {
 
     //halaman laporan
     Route::get('/laporan', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
+    Route::post('/laporan/tampilkanLaporan', [App\Http\Controllers\LaporanController::class, 'tampilkanLaporan'])->name('laporan.tampilkanLaporan');
 
     //halaman promo
     Route::get('/promo', [App\Http\Controllers\PromoController::class, 'index'])->name('promo.index');
